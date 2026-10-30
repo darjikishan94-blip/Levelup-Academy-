@@ -37,22 +37,7 @@
     })
   );
 
-  // Animated counters
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const animateCount = (el) => {
-    const target = Number(el.dataset.count);
-    const suffix = el.dataset.suffix || '';
-    if (reduceMotion) { el.textContent = target.toLocaleString() + suffix; return; }
-    const duration = 1400;
-    const start = performance.now();
-    const tick = (now) => {
-      const t = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = Math.round(target * eased).toLocaleString() + suffix;
-      if (t < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
 
   // Reveal on scroll
   const revealTargets = document.querySelectorAll('.section-head, .card, .feature, .person, .steps li, .faq details, .enquiry');
@@ -68,43 +53,9 @@
     }, { threshold: 0.12 });
     revealTargets.forEach((el) => io.observe(el));
 
-    const countIo = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        animateCount(entry.target);
-        countIo.unobserve(entry.target);
-      });
-    }, { threshold: 0.5 });
-    document.querySelectorAll('[data-count]').forEach((el) => countIo.observe(el));
   } else {
     revealTargets.forEach((el) => el.classList.add('visible'));
-    document.querySelectorAll('[data-count]').forEach(animateCount);
   }
-
-  // Testimonial slider
-  const quotes = document.querySelectorAll('.quote');
-  const dotsWrap = document.querySelector('.slider-dots');
-  let current = 0;
-  let timer;
-  const show = (i) => {
-    current = (i + quotes.length) % quotes.length;
-    quotes.forEach((q, idx) => q.classList.toggle('active', idx === current));
-    dotsWrap.querySelectorAll('button').forEach((d, idx) => d.setAttribute('aria-selected', String(idx === current)));
-  };
-  quotes.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.type = 'button';
-    dot.setAttribute('role', 'tab');
-    dot.setAttribute('aria-label', 'Testimonial ' + (i + 1));
-    dot.addEventListener('click', () => { show(i); restart(); });
-    dotsWrap.appendChild(dot);
-  });
-  const restart = () => {
-    clearInterval(timer);
-    if (!reduceMotion) timer = setInterval(() => show(current + 1), 6000);
-  };
-  show(0);
-  restart();
 
   // Enquiry form (client-side validation; wire to a backend or form service to receive submissions)
   const form = document.getElementById('enquiry-form');
@@ -119,11 +70,11 @@
     });
     if (!valid) {
       status.className = 'form-status err';
-      status.textContent = 'Please fill in the student name, a valid phone number and grade.';
+      status.textContent = 'Please fill in the student name, a valid phone number and class.';
       return;
     }
     status.className = 'form-status ok';
-    status.textContent = 'Thank you! We will call you within one working day.';
+    status.textContent = 'Thank you! We will get back to you soon.';
     form.reset();
   });
 

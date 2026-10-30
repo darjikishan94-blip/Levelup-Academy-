@@ -1,12 +1,12 @@
-# LevelUp Academy Website
+# Level Up Academy Website
 
-A responsive, single-page static website for LevelUp Academy. It uses no build step or dependencies.
+A responsive, single-page static website for Level Up Academy (Science & Physics, Classes 8–12, Gujarat). All content is taken from the academy's own materials: test papers, evaluation reports, study material and fee policy. It uses no build step or dependencies.
 
 ## Files
 
-- `index.html`: page content (hero, programs, why us, steps, faculty, testimonials, FAQ, enquiry form)
+- `index.html`: page content (hero, classes, approach, study material, faculty, FAQ, enquiry form)
 - `styles.css`: styling and responsive layout
-- `script.js`: mobile menu, program filters, counters, testimonial slider, form validation
+- `script.js`: mobile menu, class filters, scroll reveal, form validation
 - `assets/favicon.svg`: logo / favicon
 
 ## Run locally
@@ -18,13 +18,11 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-## Before going live, replace the placeholders
+## Before going live, add what is still missing
 
-- Contact details in the `#contact` section: address, phone, email, hours
-- Faculty names, subjects and bios in the `#faculty` section
-- Stats in the stats bar (`data-count` values)
-- Testimonials: use real quotes, with permission
-- Programs, grades, schedules and boards offered
+- Contact details in the `#contact` section: only "Gujarat, India" is listed. Add the centre address, phone or WhatsApp number
+- Logo: add `Logo.jpg` from Drive as `assets/logo.jpg` and point the header/footer `<img>` tags at it
+- Batch timings, and any other teachers you want listed
 - **Enquiry form**: it currently validates and shows a thank-you message only.
   To receive submissions, connect it to a form service (e.g. Formspree, Google Forms)
   or your own backend in `script.js`.
